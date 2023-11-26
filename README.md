@@ -2,4 +2,4 @@
 Repository for project developed during November Web API workshops.
 
 
-Gitter: [LINK](https://app.gitter.im/#/room/#webapi-workshops-november-2023:gitter.im)https://app.gitter.im/#/room/#webapi-workshops-november-2023:gitter.im
+Gitter: [LINK](https://app.gitter.im/#/room/#webapi-workshops-november-2023:gitter.im)
