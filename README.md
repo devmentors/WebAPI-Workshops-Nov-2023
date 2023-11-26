@@ -3,3 +3,4 @@ Repository for project developed during November Web API workshops.
 
 
 Gitter: [LINK](https://app.gitter.im/#/room/#webapi-workshops-november-2023:gitter.im)
+Miro: [LINK](https://miro.com/app/board/uXjVNK1RTos=/)
