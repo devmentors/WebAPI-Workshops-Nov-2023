@@ -9,23 +9,35 @@ public sealed class ReservationService
     // Repository
     private static List<Reservation> _reservations = new();
     
+    public async Task<ReservationDto?> GetReservationAsync(Guid id)
+    {
+        await Task.CompletedTask;
+        var reservation = _reservations.SingleOrDefault(x => x.Id == id);
+        return reservation is null ? null : Map(reservation);
+    }
+
     public async Task<IEnumerable<ReservationDto>> GetReservationsAsync()
     {
         await Task.CompletedTask;
-        return _reservations.Select(x => new ReservationDto(x.ParkingSpotId,
-            x.UserId, x.Date, x.LicencePlate));
+        return _reservations.Select(Map);
     }
+
+    private static ReservationDto Map(Reservation reservation)
+        => new(reservation.Id, reservation.ParkingSpotId,
+            reservation.UserId, reservation.Date, reservation.LicencePlate);
     
-    public async Task ReserveParkingSpotAsync(ReservationDto dto)
+    public async Task<Guid> ReserveParkingSpotAsync(ReservationDto dto)
     {
         await Task.CompletedTask;
-        var (parkingSpotId, userId, date, licencePlate) = dto;
+        var (_, parkingSpotId, userId, date, licencePlate) = dto;
 
         var reservation = new Reservation(Guid.NewGuid(), date, 
             parkingSpotId, userId, licencePlate);
         
         _reservations.Add(reservation);
-        
+
+        return reservation.Id;
+
 
         // DB save
         // send email
