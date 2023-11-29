@@ -2,26 +2,29 @@ using MySpot.Application.DTO;
 using MySpot.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddSingleton<IReservationService, ReservationService>();
+builder.Services.AddControllers();
+
 var app = builder.Build();
+app.MapControllers();
 
 app.MapGet("/", () => "MySpot API");
 
-app.MapGet("/reservations/{id:guid}", async (Guid id) =>
+var reservations = app.MapGroup("/reservations");
+
+reservations.MapGet("/{id:guid}", async (Guid id, IReservationService reservationService) =>
 {
-    var reservationService = new ReservationService();
     var reservation = await reservationService.GetReservationAsync(id);
     return reservation is null ? Results.NotFound() : Results.Ok(reservation);
 }).WithName("Get reservation");
 
-app.MapGet("/reservations", async () =>
+reservations.MapGet("/", async (IReservationService reservationService) =>
 {
-    var reservationService = new ReservationService();
     return await reservationService.GetReservationsAsync();
 });
 
-app.MapPost("/reservations", async (ReservationDto dto) =>
+reservations.MapPost("/", async (ReservationDto dto, IReservationService reservationService) =>
 {
-    var reservationService = new ReservationService();
     var id = await reservationService.ReserveParkingSpotAsync(dto);
     return Results.CreatedAtRoute("Get reservation", new {id});
 });

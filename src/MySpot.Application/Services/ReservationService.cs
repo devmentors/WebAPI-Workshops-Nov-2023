@@ -4,10 +4,10 @@ using MySpot.Core.Exceptions;
 
 namespace MySpot.Application.Services;
 
-public sealed class ReservationService
+public sealed class ReservationService : IReservationService
 {
     // Repository
-    private static List<Reservation> _reservations = new();
+    private readonly List<Reservation> _reservations = new();
     
     public async Task<ReservationDto?> GetReservationAsync(Guid id)
     {

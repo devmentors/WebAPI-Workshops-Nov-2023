@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySpot.Infrastructure", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySpot.Api", "src\MySpot.Api\MySpot.Api.csproj", "{08189AAA-B08D-4FC8-B3AB-2849D006273C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySpot.Tests.Unit", "tests\MySpot.Tests.Unit\MySpot.Tests.Unit.csproj", "{30A8E54F-BCB9-4E6F-B98D-91A194F9D70F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{08189AAA-B08D-4FC8-B3AB-2849D006273C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08189AAA-B08D-4FC8-B3AB-2849D006273C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08189AAA-B08D-4FC8-B3AB-2849D006273C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30A8E54F-BCB9-4E6F-B98D-91A194F9D70F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30A8E54F-BCB9-4E6F-B98D-91A194F9D70F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30A8E54F-BCB9-4E6F-B98D-91A194F9D70F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30A8E54F-BCB9-4E6F-B98D-91A194F9D70F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
