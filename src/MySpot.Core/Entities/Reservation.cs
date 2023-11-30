@@ -1,4 +1,3 @@
-using System.Runtime.InteropServices.JavaScript;
 using MySpot.Core.Exceptions;
 using MySpot.Core.ValueObjects;
 
@@ -6,11 +5,15 @@ namespace MySpot.Core.Entities;
 
 public class Reservation
 {
-    public Guid Id { get; }
-    public DateOnly Date { get; }
-    public Guid ParkingSpotId { get;  }
-    public Guid UserId { get;  }
+    public Guid Id { get; private set; }
+    public DateOnly Date { get; private set; }
+    public Guid ParkingSpotId { get;  private set; }
+    public Guid UserId { get; private set; }
     public LicencePlate LicencePlate { get; private set; }
+
+    private Reservation()
+    {
+    }
 
     public Reservation(Guid id, DateOnly date, Guid parkingSpotId,
         Guid userId, LicencePlate licencePlate)

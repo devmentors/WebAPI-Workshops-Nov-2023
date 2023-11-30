@@ -4,7 +4,12 @@ namespace MySpot.Core.ValueObjects;
 
 public record LicencePlate
 {
+    // TODO: Fix DB mapping
     public string Value { get; }
+    
+    private LicencePlate()
+    {
+    }
 
     public LicencePlate(string value)
     {

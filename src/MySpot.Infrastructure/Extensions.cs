@@ -11,7 +11,7 @@ public static class Extensions
     {
         var apiSection = configuration.GetRequiredSection("api");
         services.Configure<ApiOptions>(apiSection);
-        services.AddDatabase();
+        services.AddDatabase(configuration);
         return services;
     }
 }
