@@ -6,6 +6,7 @@ using MySpot.Application.Services;
 using MySpot.Core;
 using MySpot.Infrastructure;
 using MySpot.Infrastructure.Auth;
+using MySpot.Infrastructure.Errors;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,10 +17,12 @@ builder.Services
 
 builder.Services
     .AddAuth()
+    .AddErrorHandler()
     .AddControllers();
 
 var app = builder.Build();
 
+app.UseErrorHandler();
 // app.UseAuth();
 
 app.MapControllers();

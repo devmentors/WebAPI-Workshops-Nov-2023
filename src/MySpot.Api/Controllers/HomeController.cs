@@ -16,4 +16,7 @@ public class HomeController : ControllerBase
 
     [HttpGet("hello")]
     public ActionResult<string> Get() => _apiName;
+    
+    [HttpGet("error")]
+    public ActionResult<string> Error() => throw new Exception("ooops");
 }
