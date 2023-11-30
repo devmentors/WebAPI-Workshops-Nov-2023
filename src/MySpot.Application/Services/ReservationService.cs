@@ -1,25 +1,29 @@
 using MySpot.Application.DTO;
 using MySpot.Core.Entities;
 using MySpot.Core.Exceptions;
+using MySpot.Core.Repositories;
 
 namespace MySpot.Application.Services;
 
 public sealed class ReservationService : IReservationService
 {
-    // Repository
-    private readonly List<Reservation> _reservations = new();
+    private readonly IReservationRepository _reservationRepository;
+
+    public ReservationService(IReservationRepository reservationRepository)
+    {
+        _reservationRepository = reservationRepository;
+    }
     
     public async Task<ReservationDto?> GetReservationAsync(Guid id)
     {
-        await Task.CompletedTask;
-        var reservation = _reservations.SingleOrDefault(x => x.Id == id);
+        var reservation = await _reservationRepository.GetAsync(id);
         return reservation is null ? null : Map(reservation);
     }
 
     public async Task<IEnumerable<ReservationDto>> GetReservationsAsync()
     {
-        await Task.CompletedTask;
-        return _reservations.Select(Map);
+        var reservations = await _reservationRepository.GetAllAsync();
+        return reservations.Select(Map);
     }
 
     private static ReservationDto Map(Reservation reservation)
@@ -28,14 +32,13 @@ public sealed class ReservationService : IReservationService
     
     public async Task<Guid> ReserveParkingSpotAsync(ReservationDto dto)
     {
-        await Task.CompletedTask;
         var (_, parkingSpotId, userId, date, licencePlate) = dto;
 
         var reservation = new Reservation(Guid.NewGuid(), date, 
             parkingSpotId, userId, licencePlate);
         
-        _reservations.Add(reservation);
-
+        await _reservationRepository.AddAsync(reservation);
+        
         return reservation.Id;
 
 

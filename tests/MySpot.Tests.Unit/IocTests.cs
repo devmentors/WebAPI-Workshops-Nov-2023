@@ -10,10 +10,12 @@ public class IocTests
         var serviceCollection = new ServiceCollection();
         serviceCollection
             .AddSingleton<IService, Service1>()
+            .AddSingleton<IService, Service2>()
             .AddSingleton<Foo>();
-
+        
         var serviceProvider = serviceCollection.BuildServiceProvider();
         var service = serviceProvider.GetRequiredService<IService>();
+        var services = serviceProvider.GetServices<IService>();
         var message = service.GetMessage();
     }
 

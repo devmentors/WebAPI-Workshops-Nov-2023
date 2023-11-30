@@ -1,8 +1,16 @@
+using MySpot.Application;
 using MySpot.Application.DTO;
 using MySpot.Application.Services;
+using MySpot.Core;
+using MySpot.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddSingleton<IReservationService, ReservationService>();
+
+builder.Services
+    .AddCore()
+    .AddApplication()
+    .AddInfrastructure();
+
 builder.Services.AddControllers();
 
 var app = builder.Build();
