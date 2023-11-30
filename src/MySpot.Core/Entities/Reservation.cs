@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices.JavaScript;
+using MySpot.Core.Exceptions;
 using MySpot.Core.ValueObjects;
 
 namespace MySpot.Core.Entities;
@@ -22,7 +23,7 @@ public class Reservation
         
         if (date <= DateOnly.FromDateTime(DateTime.UtcNow))
         {
-            throw new ArgumentException("Invalid reservation date!");
+            throw new InvalidReservationDateException(date);
         }
 
         Date = date;

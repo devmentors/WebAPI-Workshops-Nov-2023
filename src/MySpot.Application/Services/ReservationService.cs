@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using MySpot.Application.DTO;
 using MySpot.Core.Entities;
 using MySpot.Core.Exceptions;
@@ -8,10 +9,13 @@ namespace MySpot.Application.Services;
 public sealed class ReservationService : IReservationService
 {
     private readonly IReservationRepository _reservationRepository;
+    private readonly ILogger<ReservationService> _logger;
 
-    public ReservationService(IReservationRepository reservationRepository)
+    public ReservationService(IReservationRepository reservationRepository,
+        ILogger<ReservationService> logger)
     {
         _reservationRepository = reservationRepository;
+        _logger = logger;
     }
     
     public async Task<ReservationDto?> GetReservationAsync(Guid id)
@@ -25,19 +29,18 @@ public sealed class ReservationService : IReservationService
         var reservations = await _reservationRepository.GetAllAsync();
         return reservations.Select(Map);
     }
-
-    private static ReservationDto Map(Reservation reservation)
-        => new(reservation.Id, reservation.ParkingSpotId,
-            reservation.UserId, reservation.Date, reservation.LicencePlate);
     
     public async Task<Guid> ReserveParkingSpotAsync(ReservationDto dto)
     {
+        var reservationId = Guid.NewGuid();
+        _logger.LogInformation($"Creating a reservation ID: {reservationId}...");
         var (_, parkingSpotId, userId, date, licencePlate) = dto;
 
-        var reservation = new Reservation(Guid.NewGuid(), date, 
+        var reservation = new Reservation(reservationId, date, 
             parkingSpotId, userId, licencePlate);
         
         await _reservationRepository.AddAsync(reservation);
+        _logger.LogInformation($"Created a reservation with ID: {reservationId}");
         
         return reservation.Id;
 
@@ -45,6 +48,10 @@ public sealed class ReservationService : IReservationService
         // DB save
         // send email
     }
+    
+    private static ReservationDto Map(Reservation reservation)
+        => new(reservation.Id, reservation.ParkingSpotId,
+            reservation.UserId, reservation.Date, reservation.LicencePlate);
 
     public async Task UpdateReservation(ReservationDto dto)
     {
